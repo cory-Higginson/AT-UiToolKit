@@ -10,8 +10,8 @@ public class move : DebugMe
     public Transform trans;
     void Start()
     {
-        corutine = Moveing(); runtimeCheck();
-        StartCoroutine(corutine); runtimeCheck();
+        corutine = Moveing(); //runtimeCheck();
+        StartCoroutine(corutine); //runtimeCheck();
     }
 
     // Update is called once per frame
@@ -30,31 +30,31 @@ public class move : DebugMe
     {
         while (true)
         {
-            yield return new WaitForSeconds(1); runtimeCheck();
-            trans.Translate(Vector3.left); runtimeCheck();
+            yield return new WaitForSeconds(1); //runtimeCheck();
+            trans.Translate(Vector3.left); //runtimeCheck();
 
 
-            yield return new WaitForSeconds(1); runtimeCheck();
-            trans.Translate(Vector3.left); runtimeCheck();
+            yield return new WaitForSeconds(1); //runtimeCheck();
+            trans.Translate(Vector3.left); //runtimeCheck();
 
-            yield return new WaitForSeconds(1); runtimeCheck();
-            trans.Translate(Vector3.up); runtimeCheck();
+            yield return new WaitForSeconds(1); //runtimeCheck();
+            trans.Translate(Vector3.up); //runtimeCheck();
 
-            yield return new WaitForSeconds(1); runtimeCheck();
-            trans.Translate(Vector3.up); runtimeCheck();
+            yield return new WaitForSeconds(1); //runtimeCheck();
+            trans.Translate(Vector3.up); //runtimeCheck();
 
-            yield return new WaitForSeconds(1); runtimeCheck();
-            trans.Translate(Vector3.right); runtimeCheck();
-            yield return new WaitForSeconds(1); runtimeCheck();
-            trans.Translate(Vector3.right); runtimeCheck();
+            yield return new WaitForSeconds(1); //runtimeCheck();
+            trans.Translate(Vector3.right); //runtimeCheck();
+            yield return new WaitForSeconds(1); //runtimeCheck();
+            trans.Translate(Vector3.right); //runtimeCheck();
 
-            yield return new WaitForSeconds(1); runtimeCheck();
-            trans.Translate(Vector3.down); runtimeCheck();
+            yield return new WaitForSeconds(1); //runtimeCheck();
+            trans.Translate(Vector3.down); //runtimeCheck();
 
-            yield return new WaitForSeconds(1); runtimeCheck();
-            trans.Translate(Vector3.down); runtimeCheck();
+            yield return new WaitForSeconds(1); //runtimeCheck();
+            trans.Translate(Vector3.down); //runtimeCheck();
 
-            yield return new WaitForSeconds(3); runtimeCheck();
+            yield return new WaitForSeconds(3); //runtimeCheck();
 
         }
 
