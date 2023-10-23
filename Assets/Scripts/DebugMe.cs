@@ -6,8 +6,8 @@ using System.Runtime.CompilerServices;
 
 public class DebugMe : MonoBehaviour
 {
-    [SerializeField] private String m_ConsoleLine;
-    [SerializeField] private String m_ConsoleFunction;
+    [SerializeField]private String m_ConsoleLine;
+    [SerializeField]private String m_ConsoleFunction;
 
     //adapted from:
     //https://learn.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.callermembernameattribute?view=net-7.0&redirectedfrom=MSDN
