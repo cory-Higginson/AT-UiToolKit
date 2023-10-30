@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Moveotherway : MonoBehaviour
+public class Moveotherway : DebugMe
 {
         private IEnumerator corutine;
         //Start is called before the first frame update
@@ -12,8 +12,8 @@ public class Moveotherway : MonoBehaviour
         [SerializeField] private Mesh m4;
         void Start()
         {
-            corutine = changeing();
-            StartCoroutine(corutine);
+            corutine = changeing(); runtimeCheck();
+            StartCoroutine(corutine); runtimeCheck();
         }
 
         // Update is called once per frame
@@ -26,24 +26,24 @@ public class Moveotherway : MonoBehaviour
         {
             while (true)
             {
-                gameObject.GetComponent<MeshFilter>().mesh = m1;
-                yield return new WaitForSeconds(1);
-                gameObject.GetComponent<MeshFilter>().mesh = m2;
-                yield return new WaitForSeconds(1);
-                gameObject.GetComponent<MeshFilter>().mesh = m3;
-                yield return new WaitForSeconds(1);
-                gameObject.GetComponent<MeshFilter>().mesh = m4;
-                yield return new WaitForSeconds(1);
-                gameObject.GetComponent<MeshFilter>().mesh = m1;
-                yield return new WaitForSeconds(1);
-                gameObject.GetComponent<MeshFilter>().mesh = m2;
-                yield return new WaitForSeconds(1);
-                gameObject.GetComponent<MeshFilter>().mesh = m3;
-                yield return new WaitForSeconds(1);
-                gameObject.GetComponent<MeshFilter>().mesh = m4;
-                yield return new WaitForSeconds(1);
-                gameObject.GetComponent<MeshFilter>().mesh = m1;
-                yield return new WaitForSeconds(3);
+                gameObject.GetComponent<MeshFilter>().mesh = m1; runtimeCheck();
+                yield return new WaitForSeconds(1); runtimeCheck();
+                gameObject.GetComponent<MeshFilter>().mesh = m2; runtimeCheck();
+                yield return new WaitForSeconds(1); runtimeCheck();
+                gameObject.GetComponent<MeshFilter>().mesh = m3; runtimeCheck();
+                yield return new WaitForSeconds(1); runtimeCheck();
+                gameObject.GetComponent<MeshFilter>().mesh = m4; runtimeCheck();
+                yield return new WaitForSeconds(1); runtimeCheck();
+                gameObject.GetComponent<MeshFilter>().mesh = m1; runtimeCheck();
+                yield return new WaitForSeconds(1); runtimeCheck();
+                gameObject.GetComponent<MeshFilter>().mesh = m2; runtimeCheck();
+                yield return new WaitForSeconds(1); runtimeCheck();
+                gameObject.GetComponent<MeshFilter>().mesh = m3; runtimeCheck();
+                yield return new WaitForSeconds(1); runtimeCheck();
+                gameObject.GetComponent<MeshFilter>().mesh = m4; runtimeCheck();
+                yield return new WaitForSeconds(1); runtimeCheck();
+                gameObject.GetComponent<MeshFilter>().mesh = m1; runtimeCheck();
+                yield return new WaitForSeconds(3); runtimeCheck();
             }
         }
     }
