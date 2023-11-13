@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 
 using UnityEditor;
@@ -12,13 +15,10 @@ public class EnableDebug : Editor
     private bool enable = false;
     public override VisualElement CreateInspectorGUI()
     {
+        // Create a new VisualElement to be the root of our inspector UI
         VisualElement myInspector = new VisualElement();
-        //myInspector.schedule.Execute(_ => CreateInspectorGUI()).Every(1000);
         var path = AssetDatabase.GetAssetPath(serializedObject.FindProperty("m_Script").objectReferenceValue);
-
-
         //enable = serializedObject.FindProperty("m_Script").objectReferenceValue.GetType().IsSubclassOf(AssetDatabase.FindAssets("DebugMe").GetType());
-
         Debug.Log(path);
         string[] lines = File.ReadAllLines(path);
         for (int i = 0; i < lines.Length; i++)
@@ -31,7 +31,7 @@ public class EnableDebug : Editor
         }
 
 
-        // Create a new VisualElement to be the root of our inspector UI
+
         if (enable)
         {
             // Create a new VisualElement to be the root of our inspector UI
@@ -80,6 +80,7 @@ public class EnableDebug : Editor
                     }
                 }
 
+
                 File.WriteAllLines(path, lines);
                 //https://docs.unity3d.com/ScriptReference/Compilation.CompilationPipeline.RequestScriptCompilation.html#:~:text=After%20the%20compilation%2C%20if%20the,changes%2C%20you%20can%20pass%20RequestScriptCompilationOptions.
                 //UnityEditor.Compilation.CompilationPipeline.RequestScriptCompilation();
@@ -94,17 +95,22 @@ public class EnableDebug : Editor
 
             var functioncode = new TextField("code ran from:");
             functioncode.value = "function();";
-            //runningcode.SetEnabled(false);
             functioncode.bindingPath = "m_ConsoleFunction";
             functioncode.isReadOnly = true;
             myInspector.Add(functioncode);
 
-            var runningcode = new TextField("ConsoleLine:");
-            runningcode.value = "[Line] print(\"hello World\")";
-            //runningcode.SetEnabled(false);
+
+            Func<VisualElement> makeItem = () => new Label();
+
+            var runningcode = new ListView();
             runningcode.bindingPath = "m_ConsoleLine";
-            runningcode.multiline = true;
-            runningcode.isReadOnly = true;
+            runningcode.selectionType = SelectionType.None;
+            runningcode.makeItem = makeItem;
+            runningcode.showBorder = true;
+            runningcode.showBoundCollectionSize = false;
+            runningcode.horizontalScrollingEnabled = true;
+            runningcode.style.maxHeight = runningcode.fixedItemHeight * 5;
+            runningcode.showAlternatingRowBackgrounds = AlternatingRowBackground.All;
             myInspector.Add(runningcode);
 
 
@@ -137,14 +143,18 @@ public class EnableDebug : Editor
             debugEnable.RegisterCallback<ClickEvent>(evt =>
             {
                 UnityEngine.Debug.Log(serializedObject.FindProperty("m_Script").objectReferenceValue.name);
-
-
+                const string cache_path = "Assets/Scripts/editor/Cache";
                 //string filter = "t:Object l:" + serializedObject.FindProperty("m_Script").objectReferenceValue.name;
 
                 //var stuff = AssetDatabase.FindAssets(filter);
-                var path = AssetDatabase.GetAssetPath(serializedObject.FindProperty("m_Script").objectReferenceValue);
-                UnityEngine.Debug.Log(path);
+                string path = AssetDatabase.GetAssetPath(serializedObject.FindProperty("m_Script").objectReferenceValue);
+
+
+                var cache_name = serializedObject.FindProperty("m_Script").objectReferenceValue.name + "_cache";
                 string[] lines = File.ReadAllLines(path);
+                File.WriteAllLines( cache_path + "/" + cache_name + ".cs", lines);
+                Debug.Log(path);
+
                 string oldword = "MonoBehaviour";
                 string newword = "DebugMe";
 
@@ -170,12 +180,15 @@ public class EnableDebug : Editor
                         }
                     }
                 }
-
-                File.WriteAllLines(path, lines);
+                File.WriteAllLines( path, lines);
                 //https://docs.unity3d.com/ScriptReference/Compilation.CompilationPipeline.RequestScriptCompilation.html#:~:text=After%20the%20compilation%2C%20if%20the,changes%2C%20you%20can%20pass%20RequestScriptCompilationOptions.
                 //UnityEditor.Compilation.CompilationPipeline.RequestScriptCompilation();
                 enable = true;
-                UnityEditor.Compilation.CompilationPipeline.RequestScriptCompilation();
+                //Debug.Log(cache_path);
+                //Debug.Log(cache_name);
+                AssetDatabase.Refresh();
+
+                //UnityEditor.Compilation.CompilationPipeline.RequestScriptCompilation();
                 //CreateInspectorGUI();
                 //RequestScriptCompilation();
 
@@ -185,7 +198,9 @@ public class EnableDebug : Editor
             var scipt_propertys = new VisualElement();
             scipt_propertys.name = "propertys";
             InspectorElement.FillDefaultInspector(scipt_propertys, serializedObject, this);
-            scipt_propertys[0].visible = false;
+            scipt_propertys[0].visible = true;
+            scipt_propertys[0].focusable = true;
+
 
             myInspector.Add(scipt_propertys);
             //InspectorElement.FillDefaultInspector(myInspector, serializedObject, this);
