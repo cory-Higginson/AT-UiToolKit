@@ -46,8 +46,7 @@ public class move : MonoBehaviour
             yield return new WaitForSeconds(1);  
             trans.Translate(Vector3.down);  
 
-            yield return new WaitForSeconds(3);  
-
+            yield return new WaitForSeconds(3);
         }
 
     }
