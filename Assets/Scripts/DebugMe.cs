@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 public class DebugMe : MonoBehaviour
 {
     [SerializeField]public List<string> m_ConsoleLine = new List<string>(1000);
-    [SerializeField]private String m_ConsoleFunction;
+    [SerializeField]public string m_ConsoleFunction;
 
     private string[] cachedstuff;
     //adapted from:

@@ -46,8 +46,7 @@ public class move : DebugMe
             yield return new WaitForSeconds(1); runtimeCheck();  
             trans.Translate(Vector3.down); runtimeCheck();  
 
-            yield return new WaitForSeconds(3); runtimeCheck();  
-
+            yield return new WaitForSeconds(3); runtimeCheck();
         }
 
     }
