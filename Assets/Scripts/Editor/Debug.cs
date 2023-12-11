@@ -8,6 +8,7 @@ using UnityEditor.UIElements;
 using UnityEngine.UIElements;
 using UnityEngine;
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(MonoBehaviour), true, isFallback = true)]
 public class EnableDebug : Editor
 {
@@ -22,6 +23,7 @@ public class EnableDebug : Editor
 
         debugEnable.RegisterCallback<ClickEvent>(evt =>
         {
+            Debug.Log(serializedObject.targetObject.name);
             UnityEngine.Debug.Log(serializedObject.FindProperty("m_Script").objectReferenceValue.name);
             const string cache_path = "Assets/Scripts/editor/Cache";
             //string filter = "t:Object l:" + serializedObject.FindProperty("m_Script").objectReferenceValue.name;
@@ -63,7 +65,9 @@ public class EnableDebug : Editor
 
             File.WriteAllLines(path, lines);
             AssetDatabase.Refresh();
-
+            
+            GameObject obj = GameObject.Find(serializedObject.targetObject.name);
+            obj.GetComponent(serializedObject.FindProperty("m_Script").objectReferenceValue.name).hideFlags = HideFlags.NotEditable & HideFlags.DontSave;
             UnityEditor.Compilation.CompilationPipeline.RequestScriptCompilation();
 
 
@@ -85,7 +89,7 @@ public class EnableDebug : Editor
         return myInspector;
     }
 }
-
+#endif
 
 [CustomEditor(typeof(DebugMe), true)]
 public class DisableDebug : Editor
@@ -123,10 +127,11 @@ public class DisableDebug : Editor
 
             File.WriteAllLines(path, lines);
             //https://docs.unity3d.com/ScriptReference/Compilation.CompilationPipeline.RequestScriptCompilation.html#:~:text=After%20the%20compilation%2C%20if%20the,changes%2C%20you%20can%20pass%20RequestScriptCompilationOptions.
-            //UnityEditor.Compilation.CompilationPipeline.RequestScriptCompilation();
-            //CreateInspectorGUI();
+            GameObject obj = GameObject.Find(serializedObject.targetObject.name);
+            obj.GetComponent(serializedObject.FindProperty("m_Script").objectReferenceValue.name).hideFlags = HideFlags.None;
+
             UnityEditor.Compilation.CompilationPipeline.RequestScriptCompilation();
-            //CreateInspectorGUI();
+
         });
         myInspector.Add(debugEnable);
 

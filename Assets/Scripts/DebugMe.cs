@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using System.Runtime.CompilerServices;
-
+#if UNITY_EDITOR
 
 public class DebugMe : MonoBehaviour
 {
@@ -32,7 +32,8 @@ public class DebugMe : MonoBehaviour
             m_ConsoleLine.RemoveAt(0);
 
         }
-        m_ConsoleLine.Add("Completed " + GetType().Name + "[" + line.ToString() + "]" + cachedstuff[line + 1]);
+        m_ConsoleLine.Add("[" + line.ToString() + "]    " + cachedstuff[line].TrimStart(' '));
     }
 
 }
+#endif

@@ -6,6 +6,8 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 
+#if UNITY_EDITOR
+
 public class RuntimeVisualUi : MonoBehaviour
 {
 
@@ -108,3 +110,5 @@ public class RuntimeVisualUi : MonoBehaviour
         //}
     }
 }
+
+#endif
